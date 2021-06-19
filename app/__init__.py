@@ -6,7 +6,8 @@ from flask_mail import Mail
 from flask_login import LoginManager
 from flask_uploads import UploadSet, configure_uploads, IMAGES
 
-db = SQLAlchemy()
+
+db = SQLAlchemy() #init my database from sqlalchemy
 mail = Mail()
 bootstrap = Bootstrap()
 photos = UploadSet('photos', IMAGES)
@@ -26,6 +27,8 @@ def create_app(config_name):
 
   # initalisin extensions
   bootstrap.init_app(app)
+
+  db.init_app(app)
 
   return app
   

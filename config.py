@@ -26,9 +26,12 @@ class ProdConfig(Config):
 
 
 class DevConfig(Config):
-  SQLALCHEMY_DATABASE_URI ='postgresql+psycopg2://axs:code@localhost/iconnect'
-  DEBUG = True
+  # this is the location of the database with authentication.
 
+  SQLALCHEMY_DATABASE_URI ='postgresql+psycopg2://axs:code@localhost/iconnect'
+  
+  DEBUG = True
+#These dictionary help us access different configuration option classes.
 config_options = {
   'development':DevConfig,
   'production':ProdConfig
