@@ -5,14 +5,14 @@ from app.models import User
 from .forms import RegistrationForm,LoginForm
 
 # registration of users with
-@auth.route('/signup',methods = ["POST","GET"])
-def signup():
+@auth.route('/register',methods = ["POST","GET"])
+def register():
     form = RegistrationForm()
     if form.validate_on_submit():
         user = User(username=form.username.data, email = form.email.data, password=form.password.data)
         user.save()
         return  redirect(url_for('auth.login'))
-    return render_template('auth/signup.html',registration_form=form )
+    return render_template('auth/register.html',registration_form=form )
 
 # login
 @auth.route('/login',methods = ['POST','GET'])
