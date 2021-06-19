@@ -28,6 +28,8 @@ class User (UserMixin,db.Model):
     def verify_password(self,password):
         return check_password_hash(self.pass_secure,password)
 
+    def __repr__(self):
+        return "User: %s" %str(self.username)
 # blog model class
 class Blog(db.Model):
     __tablename__ = 'blogs'
@@ -38,6 +40,17 @@ class Blog(db.Model):
     user_id = db.Column(db.Integer,db.ForeignKey("users.id"))
     comment = db.relationship('Comment', backref='blog', lazy='dynamic')
 
+    def __repr__(self):
+        return f'Blog {self.title}'
 
-    
+# comments class
+class Comment(db.Model):
+    __tablename__='comments'
+
+    id = db.Column(db.Integer,primary_key = True)
+    comment = db.Column(db.String)
+    posted = db.Column(db.DateTime,default=datetime.utcnow)
+    blog_id = db.Column(db.Integer,db.ForeignKey("blogs.id"))
+    user_id = db.Column(db.Integer,db.ForeignKey("users.id"))
+
   
