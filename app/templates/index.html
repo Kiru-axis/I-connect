@@ -10,6 +10,12 @@
 
 <div class="container">
     <h1>{{ heading }}</h1>
+    <div class="card cardquote">
+        <div class="card-title">
+            <h4>A quote by: <span style="color: rgb(3, 3, 3)">{{quote.author}}</span> </h4>
+        </div>
+        <p class="card-text">{{quote.quote}}</p>
+    </div>
 </div>
 
 {% endblock content%}
