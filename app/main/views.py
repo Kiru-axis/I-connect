@@ -3,6 +3,8 @@ from . import main
 from ..request import get_quotes
 from app.models import User,Blog,Comment,Subscriber
 from .. import db
+from .forms import UpdateProfile,CreateBlog
+from flask_login import login_required,current_user
 
 
 # main/home route 
