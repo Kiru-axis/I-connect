@@ -5,7 +5,7 @@ from app.models import User,Blog,Comment,Subscriber
 from .. import db
 
 
-# main/home route
+# main/home route 
 @main.route('/')
 def index():
   quotes = get_quotes()
