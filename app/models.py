@@ -77,6 +77,18 @@ class Comment(db.Model):
     blog_id = db.Column(db.Integer,db.ForeignKey("blogs.id"))
     user_id = db.Column(db.Integer,db.ForeignKey("users.id"))
 
+    # comments callback functions
+    def save(self):
+        db.session.add(self)
+        db.session.commit()
+
+    def delete(self):
+        db.session.remove(self)
+        db.session.commit()
+
+    def get_comment(id):
+        comment = Comment.query.all(id=id)
+        return comment
 # subscriber class
 class Subscriber(db.Model):
     __tablename__='subscribers'
