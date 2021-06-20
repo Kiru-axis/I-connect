@@ -93,7 +93,7 @@ def update_profile(uname):
     return render_template('profile/update.html',form =form)
 
 
-
+# New Posts functionality
 @main.route('/new_post', methods=['POST','GET'])
 @login_required
 def new_blog():
@@ -110,13 +110,15 @@ def new_blog():
         return redirect(url_for('main.index'))
         flash('You Posted a new Blog')
     return render_template('newblog.html', form = form)
+
+# General create blogs section
 @main.route('/blog/<id>')
 def blog(id):
     comments = Comment.query.filter_by(blog_id=id).all()
     blog = Blog.query.get(id)
     return render_template('blog.html',blog=blog,comments=comments)
     
-
+# Updating blogs section
 @main.route('/blog/<blog_id>/update', methods = ['GET','POST'])
 @login_required
 def updateblog(blog_id):
@@ -136,25 +138,7 @@ def updateblog(blog_id):
     return render_template('newblog.html', form = form)
 
 
-
-@main.route('/comment/<blog_id>', methods = ['Post','GET'])
-@login_required
-def comment(blog_id):
-    blog = Blog.query.get(blog_id)
-    comment =request.form.get('newcomment')
-    new_comment = Comment(comment = comment, user_id = current_user._get_current_object().id, blog_id=blog_id)
-    new_comment.save()
-    return redirect(url_for('main.blog',id = blog.id))
-
-@main.route('/subscribe',methods = ['POST','GET'])
-def subscribe():
-    email = request.form.get('subscriber')
-    new_subscriber = Subscriber(email = email)
-    new_subscriber.save_subscriber()
-    mail_message("Subscribed to D-Blog","email/welcome_subscriber",new_subscriber.email,new_subscriber=new_subscriber)
-    flash('Sucessfuly subscribed')
-    return redirect(url_for('main.index'))
-
+# Deleting blogs section
 @main.route('/blog/<blog_id>/delete', methods = ['POST'])
 @login_required
 def delete_post(blog_id):
@@ -173,3 +157,25 @@ def user_posts(username):
     blogs = Blog.query.filter_by(user=user).order_by(Blog.posted.desc()).paginate(page = page, per_page = 4)
     return render_template('userposts.html',blogs=blogs,user = user)
 
+# Comments section
+
+@main.route('/comment/<blog_id>', methods = ['Post','GET'])
+@login_required
+def comment(blog_id):
+    blog = Blog.query.get(blog_id)
+    comment =request.form.get('newcomment')
+    new_comment = Comment(comment = comment, user_id = current_user._get_current_object().id, blog_id=blog_id)
+    new_comment.save()
+    return redirect(url_for('main.blog',id = blog.id))
+
+
+
+# Subscriber section
+@main.route('/subscribe',methods = ['POST','GET'])
+def subscribe():
+    email = request.form.get('subscriber')
+    new_subscriber = Subscriber(email = email)
+    new_subscriber.save_subscriber()
+    mail_message("Subscribed to I Connect","email/welcome_subscriber",new_subscriber.email,new_subscriber=new_subscriber)
+    flash('Sucessfuly subscribed')
+    return redirect(url_for('main.index'))

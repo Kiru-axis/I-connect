@@ -26,3 +26,8 @@ class CreateBlog(FlaskForm):
     title = StringField('Title',validators=[Required()])
     content = TextAreaField('Blog Content',validators=[Required()])
     submit = SubmitField('Post')
+
+# Subscribe form
+class SubscriptionForm(FlaskForm):
+    email = StringField('Your Email Address',validators=[Required(),Email()])
+    subscribe=StringField('Subscribe')
