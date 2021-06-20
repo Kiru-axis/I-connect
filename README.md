@@ -28,6 +28,10 @@
 * Input: Enter your details to the prompted fields accordingly.That is, your password and email
 * Output: Successfull account login
 
+1. **Subscribing to particular User**
+* Input: Input your email and hit the subscribe button.
+* Output: Successfull subscribedto a particular Blogger and you get a welcome email as a subsciber from the selected Blogger.
+
 1. **Adding/Making posts**
 * Input: Fill in the title, author and select the category you want your post to appear
 * Output: Everything as defined displayed on the screen 
@@ -41,6 +45,10 @@
 * Output:Profile picture successfully updated ir created if for the first time.
 + **Error Uploading picture**
 + The Picture size is above the set limmit or wrong format.Recommended formats are jpeg and png.
+
+
+## Live Link
+[Link]()
 
 ## License
 Copyright (c) 2021 Peter Kiru
