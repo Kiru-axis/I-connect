@@ -3,9 +3,11 @@ from flask_login import current_user,UserMixin
 from werkzeug.security import generate_password_hash,check_password_hash
 from datetime import datetime
 # Flask-login has a decorator @login_manage.user_loader that modifies the load_userfunction by passing in a user_id to the function that queries the database and gets a User with that ID.
+
 @login_manager.user_loader
 def load_user(user_id):
     return User.query.get(user_id)
+
 class User (UserMixin,db.Model):
     __tablename__ = 'users'
     id = db.Column(db.Integer,primary_key = True)

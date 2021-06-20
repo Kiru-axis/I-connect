@@ -12,13 +12,12 @@
             </ul>
         <ul class="navbar-nav ml-auto">
             {% if current_user.is_authenticated %}
-
             <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" style= 'margin-right:30px' data-toggle="dropdown"
               aria-haspopup="true" aria-expanded="false">
               <i class="fas fa-user"></i>&nbsp;<strong>{{current_user.username}}</strong> </a>
             <div class="dropdown-menu dropdown-menu-right dropdown-info" aria-labelledby="navbarDropdownMenuLink-4">
-              <a class="dropdown-item" href="{{url_for('main.profile',name=current_user.username)}}"><i class="far fa-user"></i>&nbsp; My account</a>
+              <li><a href="{{url_for('main.profile',uname=current_user.username)}}">Profile</a></li>
               <a class="dropdown-item" href="{{url_for('auth.logout')}}"><i class="fas fa-sign-out-alt"></i>&nbsp; Log out</a>
             </div>
             </li>
@@ -30,7 +29,7 @@
                   <a  class="nav-link mr-5" href="{{url_for('auth.login')}}" ><i class="fas fa-sign-in-alt "></i>&nbsp; <strong>Log In</strong></a>
               </li>
             {%endif%}
-
         </ul>
+        
     </div>
 </nav>

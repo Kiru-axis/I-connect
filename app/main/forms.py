@@ -7,11 +7,8 @@ from ..models import User
 
 # Update proile form
 class UpdateProfile(FlaskForm):
-    username = StringField('Enter Your Username', validators=[Required()])
-    email = StringField('Email Address', validators=[Required(),Email()])
-    bio = TextAreaField('Write a brief bio about you.',validators = [Required()])
-    profile_picture = FileField('profile picture', validators=[FileAllowed(['jpg','png'])])
-    submit = SubmitField('Update')
+    bio = TextAreaField('Tell us about you.',validators = [Required()])
+    submit = SubmitField('Submit')
 
 
     def validate_email(self,email):
