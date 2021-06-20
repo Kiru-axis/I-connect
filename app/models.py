@@ -2,7 +2,7 @@ from . import db,login_manager
 from flask_login import current_user,UserMixin
 from werkzeug.security import generate_password_hash,check_password_hash
 from datetime import datetime
-
+# Flask-login has a decorator @login_manage.user_loader that modifies the load_userfunction by passing in a user_id to the function that queries the database and gets a User with that ID.
 @login_manager.user_loader
 def load_user(user_id):
     return User.query.get(user_id)
@@ -19,27 +19,22 @@ class User (UserMixin,db.Model):
 
     # securing user passwords
     @property
-    def password(self):
+    def set_password(self):
         raise AttributeError('You cannot read the password attribute')
 
-    @password.setter
+    @set_password.setter
     def password(self, password):
-        self.pass_secure = generate_password_hash(password)
-
-
+        self.hashed_password = generate_password_hash(password)
     def verify_password(self,password):
-        return check_password_hash(self.pass_secure,password)
+        return check_password_hash(self.hashed_password,password)
 
-    # callback functions
     def save(self):
         db.session.add(self)
         db.session.commit()
-
     def delete(self):
         db.session.delete(self)
         db.session.commit()
 
-    # table output
     def __repr__(self):
         return "User: %s" %str(self.username)
 # blog model class

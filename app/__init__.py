@@ -12,6 +12,8 @@ bootstrap = Bootstrap()
 photos = UploadSet('photos', IMAGES)
 
 login_manager = LoginManager()
+login_manager.session_protection = 'strong'
+login_manager.login_view = 'auth.login'
 
 def create_app(config_name):
   app = Flask(__name__)
@@ -36,5 +38,9 @@ def create_app(config_name):
 
   # Init mail_message
   mail.init_app(app)
+  # login LoginManager
+  login_manager.init_app(app)
+
+
   return app
   
