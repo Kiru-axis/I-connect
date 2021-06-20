@@ -4,10 +4,10 @@
     <div class="container landing">
         <div class="row ">
                 {% if current_user.is_authenticated %}
-                <div class="col-md-3 "><a class="btn btn-sm btn-info " id="ref" href="{{url_for('main.new_blog')}}">Post</a></div>
+                <div class="col-md-3 "><a class="btn btn-lg btn-outline-light " id="ref" href="{{url_for('main.new_blog')}}">Post</a></div>
                 {% endif %}
             
-            <div class="col-md-9 p-4 text-center bg-dark text-warning"><h1 >Connect with IConnect</h1></div>
+            <div class="col-md-9 p-4 text-center bg-dark mx-3 text-warning"><h1 >Connect with IConnect</h1></div>
         </div>
 
         <div class="row">

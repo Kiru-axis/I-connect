@@ -9,11 +9,12 @@ from flask_uploads import UploadSet, configure_uploads, IMAGES
 db = SQLAlchemy() #init my database from sqlalchemy
 mail = Mail()
 bootstrap = Bootstrap()
-photos = UploadSet('photos', IMAGES)
 
 login_manager = LoginManager()
 login_manager.session_protection = 'strong'
 login_manager.login_view = 'auth.login'
+
+photos = UploadSet('photos', IMAGES)
 
 def create_app(config_name):
   app = Flask(__name__)
@@ -33,7 +34,7 @@ def create_app(config_name):
   bootstrap.init_app(app)
 
   db.init_app(app)
-  # handling uploads
+  # configure UploadSet
   configure_uploads(app,photos)
 
   # Init mail_message
