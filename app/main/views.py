@@ -141,6 +141,7 @@ def comment(blog_id):
 
 # Subscriber section
 @main.route('/subscribe',methods = ['POST','GET'])
+@login_required
 def subscribe():
     email = request.form.get('subscriber')
     new_subscriber = Subscriber(email = email)
