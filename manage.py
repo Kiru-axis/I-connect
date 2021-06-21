@@ -6,7 +6,6 @@ from app.models import Subscriber, User #Userclass
 
 
 app = create_app('development')
-app = create_app('test')
 migrate = Migrate(app,db)
 manager = Manager(app)
 manager.add_command('server', Server)

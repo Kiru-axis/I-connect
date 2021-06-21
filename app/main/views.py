@@ -145,6 +145,6 @@ def subscribe():
     email = request.form.get('subscriber')
     new_subscriber = Subscriber(email = email)
     new_subscriber.save_subscriber()
-    mail_message("Subscribed to I Connect","email/welcome_subscriber",new_subscriber.email,new_subscriber=new_subscriber)
+    # mail_message("Subscribed to I Connect","email/welcome_subscriber",new_subscriber.email,new_subscriber=new_subscriber)
     flash('Welcome to the family')
     return redirect(url_for('main.index'))

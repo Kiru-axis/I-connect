@@ -13,8 +13,7 @@ class Config:
   UPLOADED_PHOTOS_DEST = 'app/static/photos'
 
 # db test
-class TestConfig(Config):
-    SQLALCHEMY_DATABASE_URI ='postgresql+psycopg2://axs:code@localhost/iconnect_test'
+
 
 class ProdConfig(Config):
     '''
@@ -39,5 +38,4 @@ class DevConfig(Config):
 config_options = {
   'development':DevConfig,
   'production':ProdConfig,
-  'test':TestConfig
 }
