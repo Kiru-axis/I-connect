@@ -6,10 +6,6 @@
       <hr />
       <div class="row ">
         <div class="col-md-1">
-          <img
-            class="rounded-circle blog-img"
-            src="{{ url_for('static', filename='photos/' + blog.user.profile_pic_path) }}"
-          />
         </div>
         <div class="col-md-8">
           {% for message in get_flashed_messages() %}

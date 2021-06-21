@@ -19,10 +19,10 @@
 
 ## Behaviour Development Design
 1. **Creating a new user account**
-*Input: Click on the signup button and fill the all the fields as per requirement.
+* Input: Click on the signup button and fill the all the fields as per requirement.
 * Output: A new user account is created
 + **Error creating new user account**
-* User has not followed the prompted questions as asked or the user and email have alreaady been taken
+* User has not followed the prompted questions as asked or the username and email have alreaady been taken.
 
 1. **Loging in to your account**
 * Input: Enter your details to the prompted fields accordingly.That is, your password and email
