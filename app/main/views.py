@@ -141,11 +141,10 @@ def comment(blog_id):
 
 # Subscriber section
 @main.route('/subscribe',methods = ['POST','GET'])
-@login_required
 def subscribe():
     email = request.form.get('subscriber')
     new_subscriber = Subscriber(email = email)
     new_subscriber.save_subscriber()
     mail_message("Subscribed to I Connect","email/welcome_subscriber",new_subscriber.email,new_subscriber=new_subscriber)
-    flash('Sucessfuly subscribed')
+    flash('Welcome to the family')
     return redirect(url_for('main.index'))

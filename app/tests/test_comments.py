@@ -5,7 +5,7 @@ from app import db
 class CommentModelTest(unittest.TestCase):
     def setUp(self):
         
-        self.new_comment = Comment(id = 1, comment = 'Test comment', user = self.user_emma, blog_id = self.new_blog)
+        self.new_comment = Comment(id = 1, comment = 'Test comment', user = self.user_email, blog_id = self.new_blog)
         
     def tearDown(self):
         Blog.query.delete()
@@ -40,4 +40,4 @@ class CommentModelTest(unittest.TestCase):
     def test_get_comment(self):
         self.new_comment.save()
         got_comment = Comment.get_comment(1)
-        self.assertTrue(get_comment is not None)
+        self.assertTrue(got_comment is not None)

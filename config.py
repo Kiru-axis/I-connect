@@ -12,6 +12,10 @@ class Config:
   MAIL_PASSWORD = os.environ.get('MAIL_PASSWORD')
   UPLOADED_PHOTOS_DEST = 'app/static/photos'
 
+# db test
+class TestConfig(Config):
+    SQLALCHEMY_DATABASE_URI ='postgresql+psycopg2://axs:code@localhost/iconnect_test'
+
 class ProdConfig(Config):
     '''
     Production  configuration child class
@@ -34,5 +38,6 @@ class DevConfig(Config):
 #These dictionary help us access different configuration option classes.
 config_options = {
   'development':DevConfig,
-  'production':ProdConfig
+  'production':ProdConfig,
+  'test':TestConfig
 }
