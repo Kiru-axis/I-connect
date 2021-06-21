@@ -46,6 +46,8 @@
 + **Error Uploading picture**
 + The Picture size is above the set limmit or wrong format.Recommended formats are jpeg and png.
 
+1. **Note**
++ You can view a bloggers picture and bio by clicking on his/her name
 
 ## Live Link
 [Link]()
