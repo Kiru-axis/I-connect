@@ -1,0 +1,9 @@
+{% extends 'base.html' %} {% from 'bootstrap5/form.html' import render_form %}
+
+<title>{% block title %}Update Profile{% endblock title %}</title>
+
+{% block content %}
+<div class="container">
+  <form method="post" class="">{{ render_form(form) }}</form>
+</div>
+{% endblock %}

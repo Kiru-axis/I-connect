@@ -1,0 +1,291 @@
+{% extends 'base.html'%} {% block content %} {% from 'bootstrap5/form.html'
+import render_form,render_field, render_hidden_errors %}
+
+<section class="home-page pt-md-4 row">
+  <div class="col-7">
+    {% for blog in blogs.items %}
+    <div class="card mb-3" style="max-width: 45rem">
+      <div class="card-body">
+        <!-- Data -->
+        <div class="card-top d-flex align-items-center justify-content-between">
+          <a
+            href="{{ url_for('users.profile',username=blog.user.username) }}"
+            class="d-flex mb-1 main-link"
+          >
+            <div>
+              <img
+                src="{{ url_for('static',filename='profiles/'+ blog.user.image)  }}"
+                class="border rounded-circle me-2"
+                alt="Avatar"
+                style="height: 40px"
+              />
+            </div>
+            <div>
+              <p href="" class="text-dark mb-0">
+                <strong>{{blog.user.username}}</strong>
+              </p>
+              <p href="" class="text-muted d-block" style="margin-top: -6px">
+                <small>{{blog.date_posted.strftime("%Y-%m-%d")}}</small>
+              </p>
+            </div>
+          </a>
+          {% if current_user== blog.user %}
+
+          <div class="d-flex gap-3">
+            <a
+              href="{{url_for('blog.update_blog',blog_id=blog.id)  }}"
+              class="informational mt-1 fas fa-edit text-info bg-transparent d-block"
+            ></a>
+
+            <form
+              method="post"
+              action="{{ url_for('blog.delete_blog',blog_id=blog.id) }}"
+              class="informational"
+              data-bs-toggle="tooltip"
+              data-bs-placement="top"
+              title="These action is irreversible"
+            >
+              <button
+                type="submit"
+                class="fas fa-trash text-danger outline-0 border-0"
+              ></button>
+            </form>
+          </div>
+
+          {% endif %}
+        </div>
+        <!-- Description -->
+        <p class="mb-1">{{blog.content}}</p>
+      </div>
+      <!-- Media -->
+      <div class="post-image">
+        <img
+          src="{{ url_for('static',filename='blogs/'+blog.image) }}"
+          class="img-fluid"
+        />
+      </div>
+      <!-- Media -->
+      <!-- Interactions -->
+      <div class="card-body">
+        <!-- Reactions -->
+        <div class="d-flex justify-content-between mb-1">
+          <div>
+            <a>
+              <i class="fas fa-heart text-danger"></i>
+              <span>{{blog.likes|length}}</span>
+            </a>
+          </div>
+          <div>
+            <small id="" class="text-muted">
+              {{blog.comment|length}} comments
+            </small>
+          </div>
+        </div>
+        <!-- Reactions -->
+
+        <div class="row mt-2 mb-4">
+          <div class="col-8 mx-auto">
+            <div class="d-flex justify-content-between text-center">
+              {% if current_user.is_authenticated %} {% if current_user !=
+              blog.user %}
+              <a
+                href="{{url_for('blog.like',blog_id=blog.id)}}"
+                class="informational"
+              >
+                <i class="fas fa-thumbs-up me-2"></i>Like
+              </a>
+              {% endif %} {% endif %}
+              <button
+                type="button"
+                data-bs-toggle="collapse"
+                data-bs-target="#contentId{{blog.id}}"
+                aria-expanded="false"
+                aria-controls="contentId{{blog.id}}"
+                class="informational show-comments"
+              >
+                <i class="fas fa-comment-alt me-2"></i>Show
+                {{blog.comment|length}} Comments
+              </button>
+
+              <button type="button" class="informational">
+                <i class="fas fa-share me-2"></i>Share
+              </button>
+            </div>
+          </div>
+        </div>
+
+        {% if current_user.is_authenticated %} {% if current_user != blog.user
+        %}
+
+        <div class="d-flex mb-1">
+          <a
+            href="{{ url_for('users.profile',username=current_user.username) }}"
+          >
+            <img
+              src="{{url_for('static',filename='profiles/'+current_user.image)}}"
+              class="border rounded-circle me-2"
+              alt="Avatar"
+              style="height: 40px"
+            />
+          </a>
+          <form
+            id="commentForm"
+            novalidate
+            autocomplete="off"
+            class="form-outline w-100"
+            onsubmit="submitComment(event,{{blog.id}})"
+          >
+            <textarea
+              name="commentText"
+              class="form-control"
+              id="commentText"
+              rows="3"
+              placeholder="Leave a comment"
+            ></textarea>
+
+            <button class="btn btn-success mt-2">Post</button>
+          </form>
+        </div>
+        {% endif %} {% endif %}
+        <!-- Comments -->
+
+        <div class="comments all-comments collapse" id="contentId{{blog.id}}">
+          <!-- Answers -->
+
+          <!-- Single answer -->
+          {% for cmt in blog.comment %}
+          <div class="d-flex mb-1 blog-comments-target">
+            <a href="{{ url_for('users.profile',username=cmt.user.username) }}">
+              <img
+                src="{{url_for('static',filename='profiles/'+cmt.user.image)}}"
+                class="border rounded-circle me-2"
+                alt="Avatar"
+                style="height: 40px"
+              />
+            </a>
+            <div>
+              <div class="bg-body-tertiary rounded-3 px-3 py-1">
+                <a
+                  href="{{ url_for('users.profile',username=cmt.user.username) }}"
+                  class="text-dark mb-0"
+                >
+                  <strong>{{cmt.user.username}}</strong>
+                </a>
+
+                <span class="comment-text py-1 text-muted d-block"
+                  >{{cmt.comment}}</span
+                >
+              </div>
+            </div>
+          </div>
+          {% endfor %}
+
+          <!-- Answers -->
+        </div>
+
+        <!-- Comments -->
+      </div>
+      <!-- Interactions -->
+    </div>
+    {% endfor %}
+
+    <nav aria-label="Page navigation" class="my-3">
+      <ul class="pagination">
+        {% for page_num in
+        blogs.iter_pages(left_edge=1,right_edge=1,left_current=1,right_current=2)
+        %} {% if page_num %} {% if blogs.blog_page == page_num %}
+        <li class="page-item active" aria-current="page">
+          <a
+            class="page-link"
+            href="{{ url_for('main.index',blog_page=page_num) }}"
+            >{{page_num}}</a
+          >
+        </li>
+        {% else %}
+        <li class="page-item">
+          <a
+            class="page-link"
+            href="{{ url_for('main.index',blog_page=page_num) }}"
+            >{{page_num}}</a
+          >
+        </li>
+        {% endif %} {% else %} ... {% endif %} {% endfor %}
+      </ul>
+    </nav>
+  </div>
+
+  <div class="col-5 user-sidebar">
+    {% for user in users %} {% if current_user != user %}
+
+    <div class="card p-3 mb-2">
+      <div class="card-top">
+        <a
+          href="{{ url_for('users.profile',username=user.username) }}"
+          class="d-flex mb-1 main-link"
+        >
+          <div>
+            <img
+              src="{{ url_for('static',filename='profiles/'+ user.image)  }}"
+              class="border rounded-circle me-2"
+              alt="Avatar"
+              style="height: 40px"
+            />
+          </div>
+          <div>
+            <p href="" class="text-dark mb-0">
+              <strong>{{user.username}}</strong>
+            </p>
+          </div>
+        </a>
+      </div>
+
+      {% if current_user.is_authenticated %}
+
+      <div class="d-flex gap-2 text-center py-1 text-body mt-3">
+        <a
+          href="{{url_for('main.follow',username=user.username)}}"
+          type="button"
+          class="btn btn-outline-success text-body"
+          style="z-index: 1"
+        >
+          Follow
+        </a>
+        <a
+          href="{{url_for('main.unfollow',username=user.username)}}"
+          type="button"
+          class="btn btn-outline-info text-body ms-2"
+          style="z-index: 1"
+        >
+          Unfollow
+        </a>
+      </div>
+      {% endif %}
+    </div>
+
+    {% endif %} {% endfor %}
+
+    <nav aria-label="Page navigation" class="my-3">
+      <ul class="pagination">
+        {% for page_num in
+        users.iter_pages(left_edge=1,right_edge=1,left_current=1,right_current=2)
+        %} {% if page_num %} {% if users.user_page == page_num %}
+        <li class="page-item active" aria-current="user_page">
+          <a class="page-link" href="{{ url_for('main.index',page=page_num) }}"
+            >{{page_num}}</a
+          >
+        </li>
+        {% else %}
+        <li class="page-item">
+          <a
+            class="page-link"
+            href="{{ url_for('main.index',user_page=page_num) }}"
+            >{{page_num}}</a
+          >
+        </li>
+        {% endif %} {% else %} ... {% endif %} {% endfor %}
+      </ul>
+    </nav>
+  </div>
+</section>
+
+{% endblock %}

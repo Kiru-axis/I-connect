@@ -1,0 +1,232 @@
+{% extends 'base.html'%}
+
+<title>{% block title %}Profile{% endblock title %}</title>
+<div>
+  {% block content %}
+  <section class="">
+    <div class="container py-5 h-100">
+      <div class="row d-flex justify-content-center">
+        <div class="col col-10 mx-auto">
+          <div class="card">
+            <div
+              class="rounded-top text-white d-flex flex-row"
+              style="background-color: #000; height: 200px"
+            >
+              <div class="ms-4 mt-5 d-flex flex-column" style="width: 150px">
+                <img
+                  src="{{user_image}}"
+                  alt="Generic placeholder image"
+                  class="img-fluid img-thumbnail mt-4 mb-2"
+                  style="width: 150px; z-index: 1"
+                />
+                {% if current_user == user %}
+
+                <a
+                  href="{{url_for('users.update_profile',username=user.username)}}"
+                  class="btn btn-outline-info text-body"
+                  style="z-index: 1"
+                >
+                  Edit profile
+                </a>
+                {% endif %}
+              </div>
+              <div class="ms-3" style="margin-top: 130px">
+                <h5>{{user.username}}</h5>
+              </div>
+            </div>
+            <div class="p-4 text-black bg-body-tertiary">
+              <div
+                class="d-flex justify-content-end text-center py-1 text-body"
+              >
+                <div>
+                  <p class="mb-1 h5">{{blogs|length}}</p>
+                  <p class="small text-muted mb-0">Blogs</p>
+                </div>
+                <div class="px-3">
+                  <p class="mb-1 h5">{{followers}}</p>
+                  <p class="small text-muted mb-0">Followers</p>
+                </div>
+                <div>
+                  <p class="mb-1 h5">{{followed}}</p>
+                  <p class="small text-muted mb-0">Following</p>
+                </div>
+              </div>
+
+              {% if current_user.is_authenticated %}
+
+              <div
+                class="d-flex justify-content-end text-center py-1 text-body mt-3"
+              >
+                <a
+                  href="{{url_for('users.follow',username=user.username)}}"
+                  type="button"
+                  class="btn btn-outline-success text-body"
+                  style="z-index: 1"
+                >
+                  Follow
+                </a>
+                <a
+                  href="{{url_for('users.unfollow',username=user.username)}}"
+                  type="button"
+                  class="btn btn-outline-info text-body ms-2"
+                  style="z-index: 1"
+                >
+                  Unfollow
+                </a>
+              </div>
+              {% endif %}
+            </div>
+            <div class="card-body p-4 text-black">
+              <div class="mb-5 text-body">
+                <p class="lead fw-normal mb-1">About</p>
+                <div class="p-4 bg-body-tertiary">
+                  <p class="font-italic mb-1">{{user.bio}}</p>
+                </div>
+              </div>
+              <div
+                class="d-flex justify-content-between align-items-center mb-4 text-body"
+              >
+                <p class="lead fw-normal mb-0">Recent Posts</p>
+                <p class="mb-0"><a href="#!" class="text-muted">Show all</a></p>
+              </div>
+              <div class="row primary-bg">
+                {% for blog in blogs %}
+                <div class="col-md-6 my-2">
+                  <div
+                    class="card profile-blog-card mb-3"
+                    style="max-width: 25rem"
+                  >
+                    <div class="card-body">
+                      <!-- Data -->
+                      <a
+                        href="{{ url_for('users.profile',username=blog.user.username) }}"
+                        class="d-flex mb-1 main-link"
+                      >
+                        <div>
+                          <img
+                            src="{{ url_for('static',filename='profiles/'+ blog.user.image)  }}"
+                            class="border rounded-circle me-2"
+                            alt="Avatar"
+                            style="height: 40px"
+                          />
+                        </div>
+                        <div>
+                          <p href="" class="text-dark mb-0">
+                            <strong>{{blog.user.username}}</strong>
+                          </p>
+                          <p
+                            href=""
+                            class="text-muted d-block"
+                            style="margin-top: -6px"
+                          >
+                            <small
+                              >{{blog.date_posted.strftime("%Y-%m-%d")}}</small
+                            >
+                          </p>
+                        </div>
+                      </a>
+                      <!-- Description -->
+                      <p class="mb-1">{{blog.content}}</p>
+                    </div>
+                    <div class="post-image">
+                      <img
+                        src="{{ url_for('static',filename='blogs/'+blog.image) }}"
+                        class="img-fluid"
+                      />
+                    </div>
+                    <div class="card-body">
+                      <!-- Reactions -->
+                      <div class="d-flex justify-content-between mb-1">
+                        <div>
+                          <a>
+                            <i class="fas fa-heart text-danger"></i>
+                            <span>{{blog.likes|length}}</span>
+                          </a>
+                        </div>
+                        <div>
+                          <small id="" class="text-muted">
+                            {{blog.comment|length}} comments
+                          </small>
+                        </div>
+                      </div>
+                      <!-- Reactions -->
+
+                      <div class="row mt-2 mb-4">
+                        <div class="col-8 mx-auto">
+                          <div
+                            class="d-flex justify-content-between text-center"
+                          >
+                            <button
+                              type="button"
+                              data-bs-toggle="collapse"
+                              data-bs-target="#contentId{{blog.id}}"
+                              aria-expanded="false"
+                              aria-controls="contentId{{blog.id}}"
+                              class="informational show-comments"
+                            >
+                              <i class="fas fa-comment-alt me-2"></i>Show
+                              {{blog.comment|length}} Comments
+                            </button>
+
+                            <button type="button" class="informational">
+                              <i class="fas fa-share me-2"></i>Share
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+
+                      <!-- Comments -->
+
+                      <div
+                        class="comments all-comments collapse"
+                        id="contentId{{blog.id}}"
+                      >
+                        <!-- Answers -->
+
+                        <!-- Single answer -->
+                        {% for cmt in blog.comment %}
+                        <div class="d-flex mb-1 blog-comments-target">
+                          <a
+                            href="{{ url_for('users.profile',username=cmt.user.username) }}"
+                          >
+                            <img
+                              src="{{url_for('static',filename='profiles/'+cmt.user.image)}}"
+                              class="border rounded-circle me-2"
+                              alt="Avatar"
+                              style="height: 40px"
+                            />
+                          </a>
+                          <div>
+                            <div class="bg-body-tertiary rounded-3 px-3 py-1">
+                              <a
+                                href="{{ url_for('users.profile',username=cmt.user.username) }}"
+                                class="text-dark mb-0"
+                              >
+                                <strong>{{cmt.user.username}}</strong>
+                              </a>
+
+                              <span class="comment-text py-1 text-muted d-block"
+                                >{{cmt.comment}}</span
+                              >
+                            </div>
+                          </div>
+                        </div>
+                        {% endfor %}
+
+                        <!-- Answers -->
+                      </div>
+
+                      <!-- Comments -->
+                    </div>
+                  </div>
+                </div>
+                {% endfor %}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  {% endblock %}
+</div>

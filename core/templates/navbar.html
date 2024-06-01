@@ -1,0 +1,178 @@
+<nav
+  id="main-navbar"
+  class="navbar navbar-expand-lg navbar-dark py-md-3 bg-dark fixed-top"
+>
+  <!-- Container wrapper -->
+  <div class="container-fluid">
+    <!-- Toggle button -->
+    <button
+      class="navbar-toggler"
+      type="button"
+      data-bs-target="#sidebarMenu"
+      data-bs-toggle="collapse"
+      aria-controls="sidebarMenu"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
+    >
+      <i class="fas fa-bars"></i>
+    </button>
+
+    <!-- Brand -->
+    <a class="navbar-brand" href="{{ url_for('main.index') }}"> Home </a>
+
+    <!-- Right links -->
+    <ul class="navbar-nav ms-auto d-flex flex-row">
+      {% if current_user.is_authenticated %}
+
+      <!-- Notification dropdown -->
+      <li class="nav-item dropdown">
+        <a
+          class="nav-link me-3 me-lg-0 dropdown-toggle hidden-arrow"
+          type="button"
+          id="notfDropdown"
+          data-bs-toggle="dropdown"
+          aria-haspopup="true"
+          aria-expanded="false"
+        >
+          <i class="fas fa-bell"></i>
+          <span class="badge rounded-pill badge-notification bg-danger">1</span>
+        </a>
+        <ul
+          class="dropdown-menu dropdown-menu-end"
+          aria-labelledby="notfDropdown"
+        >
+          <li>
+            <a class="dropdown-item" href="#">Some news</a>
+          </li>
+          <li>
+            <a class="dropdown-item" href="#">Another news</a>
+          </li>
+          <li>
+            <a class="dropdown-item" href="#">Something else here</a>
+          </li>
+        </ul>
+      </li>
+
+      <!-- Icon dropdown -->
+      <li class="nav-item dropdown">
+        <a
+          class="nav-link me-3 me-lg-0 dropdown-toggle hidden-arrow"
+          type="button"
+          id="languageDropdown"
+          data-bs-toggle="dropdown"
+          aria-haspopup="true"
+          aria-expanded="false"
+        >
+          <i class="fa fa-flag flag m-0"></i>
+        </a>
+        <ul
+          class="dropdown-menu dropdown-menu-end"
+          aria-labelledby="languageDropdown"
+        >
+          <li>
+            <a class="dropdown-item" href="#"
+              ><i class="united kingdom flag"></i>English
+              <i class="fa fa-check text-success ms-2"></i
+            ></a>
+          </li>
+          <li>
+            <hr class="dropdown-divider" />
+          </li>
+          <li>
+            <a class="dropdown-item" href="#"
+              ><i class="flag-poland flag"></i>Polski</a
+            >
+          </li>
+          <li>
+            <a class="dropdown-item" href="#"
+              ><i class="flag-china flag"></i>中文</a
+            >
+          </li>
+          <li>
+            <a class="dropdown-item" href="#"
+              ><i class="flag-japan flag"></i>日本語</a
+            >
+          </li>
+          <li>
+            <a class="dropdown-item" href="#"
+              ><i class="flag-germany flag"></i>Deutsch</a
+            >
+          </li>
+          <li>
+            <a class="dropdown-item" href="#"
+              ><i class="flag-france flag"></i>Français</a
+            >
+          </li>
+          <li>
+            <a class="dropdown-item" href="#"
+              ><i class="flag-spain flag"></i>Español</a
+            >
+          </li>
+          <li>
+            <a class="dropdown-item" href="#"
+              ><i class="flag-russia flag"></i>Русский</a
+            >
+          </li>
+          <li>
+            <a class="dropdown-item" href="#"
+              ><i class="flag-portugal flag"></i>Português</a
+            >
+          </li>
+        </ul>
+      </li>
+
+      <!-- Avatar -->
+      <li class="nav-item dropdown">
+        <a
+          class="nav-link dropdown-toggle hidden-arrow d-flex align-items-center"
+          href="#"
+          type="button"
+          id="userDropdown"
+          data-bs-toggle="dropdown"
+          aria-haspopup="true"
+          aria-expanded="false"
+        >
+          <img
+            src="{{url_for('static', filename='profiles/'  + current_user.image)}}"
+            class="rounded-circle"
+            height="22"
+            alt="avatar-image"
+          />
+        </a>
+        <ul
+          class="dropdown-menu dropdown-menu-end"
+          aria-labelledby="userDropdown"
+        >
+          <li>
+            <a
+              class="dropdown-item"
+              href="{{ url_for('users.profile',username=current_user.username) }}"
+              >My profile</a
+            >
+          </li>
+          <li>
+            <a class="dropdown-item" href="#">Settings</a>
+          </li>
+          <li>
+            <a class="dropdown-item" href="{{  url_for('auth.logout') }}"
+              >Logout</a
+            >
+          </li>
+        </ul>
+      </li>
+      {% else %}
+      <li class="nav-item">
+        <a class="nav-link mr-1" href="{{url_for('auth.register')}}"
+          ><i class="fas fa-user-plus"></i>&nbsp; <strong>Sign Up</strong></a
+        >
+      </li>
+      <li class="nav-item ms-3 ms-sm-0">
+        <a class="nav-link mr-5" href="{{url_for('auth.login')}}"
+          ><i class="fas fa-sign-in-alt"></i>&nbsp; <strong>Log In</strong></a
+        >
+      </li>
+      {% endif %}
+    </ul>
+  </div>
+  <!-- Container wrapper -->
+</nav>

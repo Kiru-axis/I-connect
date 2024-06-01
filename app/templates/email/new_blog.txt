@@ -1,8 +1,0 @@
-Hello subscriber!
-
-A new blog was posted
-
-Title: {{blog.title}}
-Post: {{blog.content|truncate(30)}}
-
-

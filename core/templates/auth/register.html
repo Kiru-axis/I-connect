@@ -1,0 +1,17 @@
+{% extends "_auth-layout.html" %} {% from 'bootstrap5/form.html' import
+render_form,render_field, render_hidden_errors %}
+<title>{% block title %} Register {% endblock title %}</title>
+{% block content %}
+<section class="auth d-flex align-items-center justify-content-center">
+  <div class="form-card shadow">
+    <h4 class="form-card-title">Register</h4>
+    <form method="post" class="">{{ render_form(form) }}</form>
+    <div class="my-1">
+      <small class="text-gloom"
+        >Already have an Account?
+        <a href="{{ url_for('auth.login') }}" class="">Login</a>
+      </small>
+    </div>
+  </div>
+</section>
+{% endblock content %}
